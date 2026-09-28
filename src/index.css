@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+body { @apply bg-cream-50 text-maroon-800 font-sans antialiased; overflow-x: hidden; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+@layer components {
+  .gold-text { background: linear-gradient(180deg,#F3D98B,#C39A2F 60%,#A47D1F); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors select-none; }
+  .btn-gold { @apply bg-gradient-to-r from-gold-500 to-saffron-500 text-white shadow-lg shadow-saffron-500/30; }
+  .btn-ghost { @apply border border-gold-500/60 text-maroon-800 hover:bg-gold-400/10; }
+  .card { @apply rounded-2xl border border-gold-400/30 bg-white/70 backdrop-blur shadow-[0_10px_40px_-15px_rgba(107,30,30,.25)]; }
+  .input { @apply w-full rounded-xl border border-gold-400/40 bg-cream-50 px-4 py-3 text-base outline-none transition focus:border-saffron-500 focus:ring-2 focus:ring-saffron-400/30; }
+}
+.mandala-bg { background-image: radial-gradient(circle at 1px 1px, rgba(195,154,47,.18) 1px, transparent 0); background-size: 26px 26px; }
