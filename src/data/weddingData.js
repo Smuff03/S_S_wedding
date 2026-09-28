@@ -58,11 +58,11 @@ const wedding = {
 
   // DUMMY venues, dates & times. mapQuery is used for Google Maps buttons.
   events: [
-    { id: 'engagement', icon: '💍', name: 'Engagement', start: '2027-01-01T18:00:00+05:30', end: '2027-01-11T21:00:00+05:30', venue: 'Hotel Sunrise Banquet', address: 'FC Road, Pune 411004', mapQuery: 'ganesh hotel rasal pali', note: 'Ring ceremony followed by dinner.' },
-    { id: 'mehendi', icon: '🪷', name: 'Mehendi', start: '2027-01-01T16:00:00+05:30', end: '2027-01-12T20:00:00+05:30', venue: 'Khade Farmhouse', address: 'Hinjewadi, Pune 411057', mapQuery: 'ganesh hotel rasal pali', note: 'Henna artists, music and games.' },
-    { id: 'haldi', icon: '🌼', name: 'Haldi', start: '2027-01-02T10:00:00+05:30', end: '2027-01-12T13:00:00+05:30', venue: 'Telange Residence Lawn', address: 'Kothrud, Pune 411038', mapQuery: 'ganesh hotel rasal pali', note: 'Wear yellow & play with turmeric!' },
-    { id: 'wedding', icon: '🕉️', name: 'Wedding Ceremony', start: '2027-01-02T11:30:00+05:30', end: '2027-01-14T14:30:00+05:30', venue: 'Shree Ganesh Mangal Karyalay', address: 'Sadashiv Peth, Pune 411030', mapQuery: 'ganesh hotel rasal pali', note: 'Traditional Maharashtrian Vivah Vidhi. Muhurat 11:30 AM.' },
-    { id: 'reception', icon: '🎉', name: 'Reception', start: '2027-01-02T19:00:00+05:30', end: '2027-01-14T23:00:00+05:30', venue: 'The Grand Regency', address: 'Koregaon Park, Pune 411001', mapQuery: 'ganesh hotel rasal pali', note: 'Dinner, dance and celebrations.' },
+    { id: 'engagement', icon: '💍', name: 'Engagement', start: '2027-01-01T18:00:00+05:30', end: '2027-01-11T21:00:00+05:30', venue: 'Hotel Sunrise Banquet', address: 'FC Road, Pune 411004', mapQuery: 'River Trail Adventure Camp', note: 'Ring ceremony followed by dinner.' },
+    { id: 'mehendi', icon: '🪷', name: 'Mehendi', start: '2027-01-01T16:00:00+05:30', end: '2027-01-12T20:00:00+05:30', venue: 'Khade Farmhouse', address: 'Hinjewadi, Pune 411057', mapQuery: 'River Trail Adventure Camp', note: 'Henna artists, music and games.' },
+    { id: 'haldi', icon: '🌼', name: 'Haldi', start: '2027-01-02T10:00:00+05:30', end: '2027-01-12T13:00:00+05:30', venue: 'Telange Residence Lawn', address: 'Kothrud, Pune 411038', mapQuery: 'River Trail Adventure Camp', note: 'Wear yellow & play with turmeric!' },
+    { id: 'wedding', icon: '🕉️', name: 'Wedding Ceremony', start: '2027-01-02T11:30:00+05:30', end: '2027-01-14T14:30:00+05:30', venue: 'Shree Ganesh Mangal Karyalay', address: 'Sadashiv Peth, Pune 411030', mapQuery: 'River Trail Adventure Camp', note: 'Traditional Maharashtrian Vivah Vidhi. Muhurat 11:30 AM.' },
+    { id: 'reception', icon: '🎉', name: 'Reception', start: '2027-01-02T19:00:00+05:30', end: '2027-01-14T23:00:00+05:30', venue: 'The Grand Regency', address: 'Koregaon Park, Pune 411001', mapQuery: 'River Trail Adventure Camp', note: 'Dinner, dance and celebrations.' },
   ],
 
   // DUMMY gallery — replace with real photos in /public/images (any ratio). h = visual height hint
