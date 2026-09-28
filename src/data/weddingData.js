@@ -15,8 +15,8 @@ const wedding = {
     image: '/images/animated_image.png',
     shloka: '॥ श्री गणेशाय नमः ॥',
     tagline: 'Our Forever Begins',
-    date: '2027-01-02T11:30:00+05:30', // DUMMY main wedding date & time (drives countdown)
-    place: 'Pune, Maharashtra',        // DUMMY
+    date: '2027-01-02T17:45:00+05:30', // DUMMY main wedding date & time (drives countdown)
+    place: 'Rasal, Sudhagad, Maharashtra',        // DUMMY
   },
 
   welcome: {

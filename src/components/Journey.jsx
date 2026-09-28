@@ -1,18 +1,24 @@
 import { useRef, useState } from 'react'
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import data from '../data/weddingData'
 import { Groom, Bride } from './Figures'
-import { ease } from './Reveal'
 
-// Scroll timeline: 0 → CURTAIN_END curtains open & characters walk in,
-// then intro story, then each milestone gets an equal slice of the scroll.
+// ── How the scroll works ────────────────────────────────────────────────
+// This whole section is one tall <section> with a "sticky" viewport pinned
+// inside it. `p` (scrollYProgress) is a single number that goes from 0 to 1
+// as you scroll from the top of the section to the bottom.
+// EVERYTHING — curtains opening, the couple walking in, the thread filling,
+// and now each chapter fading in/out — is a plain function of `p`.
+// Nothing is triggered by React state + a timed animation anymore, so
+// there is nothing that can "fall behind" your finger on a fast mobile
+// scroll. Whatever `p` is right now, that's exactly what's on screen.
 const CURTAIN_END = 0.2
 const STORY_START = 0.26
 
 export default function Journey() {
   const ref = useRef(null)
   const rm = useReducedMotion()
-  const [active, setActive] = useState(-1) // -1 = intro story
+  const [active, setActive] = useState(-1) // only used to style the dots
   const items = data.journey
   const n = items.length
 
@@ -29,6 +35,8 @@ export default function Journey() {
   const head = useTransform(p, [CURTAIN_END - 0.08, CURTAIN_END], [0, 1])
   const glow = useTransform(p, [0.9, 1], [0.4, 1])
 
+  // Only used to keep the dot indicator in sync — this fires rarely
+  // (only when the active index actually changes), so it's cheap.
   useMotionValueEvent(p, 'change', (v) => {
     const i = v < STORY_START + 0.02 ? -1 : Math.min(n - 1, Math.floor(((v - STORY_START) / (1 - STORY_START)) * n))
     setActive((cur) => (cur === i ? cur : i))
@@ -45,10 +53,14 @@ export default function Journey() {
   const { groom, bride } = data.couple
   const intro = data.journeyIntro ?? 'Two souls, one destiny. From a chance hello to a lifetime of promises, our story has been written with laughter, chai and the blessings of Bappa. Scroll to walk through our memories.'
   const tags = data.journeyTags ?? ['Chai Lovers', 'Sunset Chasers', 'Ganpati Devotees']
-  const m = items[active]
+
+  // Intro fades out just before the first chapter fades in — driven by p,
+  // not by a timer, so it can never lag behind a fast scroll.
+  const introOpacity = useTransform(p, [0, STORY_START - 0.03, STORY_START], [1, 1, 0])
+  const introY = useTransform(p, [0, STORY_START - 0.03, STORY_START], [0, 0, -16])
 
   return (
-    <section id="journey" ref={ref} style={{ height: `${(n + 2) * 85}svh` }} className="relative bg-maroon-900">
+    <section id="journey" ref={ref} style={{ height: `${(n + 2) * 85}svh`, touchAction: 'pan-y' }} className="relative bg-maroon-900">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_35%,#6B1E1E_0%,#320C0C_65%,#1d0606_100%)]">
         <motion.div style={{ opacity: glow }} className="absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-saffron-500/20 blur-3xl" />
         <div className="absolute inset-0 opacity-30 mandala-bg" />
@@ -59,34 +71,26 @@ export default function Journey() {
           <h2 className="mt-1 font-serif text-3xl md:text-5xl text-cream-50">{groom.first} <span className="gold-text italic">&amp;</span> {bride.first}</h2>
         </motion.div>
 
-        {/* Story stage */}
+        {/* Story stage — intro + every chapter are all mounted at once,
+            stacked in the same spot, and simply fade via opacity as `p`
+            changes. Nothing here mounts/unmounts while you scroll. */}
         <div className="absolute inset-x-0 top-24 bottom-52 md:top-28 md:bottom-36 z-20 grid place-items-center px-4">
-          <AnimatePresence mode="wait">
-            {active < 0 ? (
-              <motion.div key="intro" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.6, ease }} className="max-w-xl text-center">
-                <p className="font-serif italic text-lg md:text-2xl leading-relaxed text-cream-100">{intro}</p>
-                <div className="mt-6 flex flex-wrap justify-center gap-2">
-                  {tags.map((t, i) => (
-                    <motion.span key={t} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 + i * 0.12 }} className="rounded-full border border-gold-400/60 bg-white/5 px-4 py-1.5 text-xs md:text-sm tracking-wide text-gold-300">{t}</motion.span>
-                  ))}
-                </div>
-                <motion.p animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity }} className="mt-8 text-xs uppercase tracking-[0.3em] text-gold-300/80">Scroll ↓</motion.p>
-              </motion.div>
-            ) : (
-              <motion.article key={active} initial={{ opacity: 0, y: 40, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -30, scale: 0.98 }} transition={{ duration: 0.55, ease }}
-                className="w-full max-w-2xl overflow-hidden rounded-2xl border border-gold-400/50 bg-cream-50/95 shadow-[0_20px_60px_-10px_rgba(0,0,0,.6)] md:grid md:grid-cols-[1fr_1.1fr]">
-                <div className="h-28 md:h-full md:min-h-[15rem] overflow-hidden">
-                  <motion.img initial={{ scale: 1.2 }} animate={{ scale: 1 }} transition={{ duration: 1.4 }} src={m.image} alt={m.title} className="h-full w-full object-cover" />
-                </div>
-                <div className="p-4 md:p-7 text-center md:text-left">
-                  <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-saffron-600">{m.date} · {active + 1}/{n}</p>
-                  <h3 className="mt-1 font-serif text-2xl md:text-4xl text-maroon-800">{m.title}</h3>
-                  <p className="mt-1 text-sm md:text-base text-maroon-800/80">{m.short}</p>
-                  <p className="mt-2 md:mt-3 border-gold-400 font-serif italic text-base md:text-lg text-maroon-700 md:border-l-2 md:pl-3">{m.story}</p>
-                </div>
-              </motion.article>
-            )}
-          </AnimatePresence>
+          <motion.div
+            style={{ opacity: introOpacity, y: introY }}
+            className="col-start-1 row-start-1 max-w-xl text-center"
+          >
+            <p className="font-serif italic text-lg md:text-2xl leading-relaxed text-cream-100">{intro}</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              {tags.map((t) => (
+                <span key={t} className="rounded-full border border-gold-400/60 bg-white/5 px-4 py-1.5 text-xs md:text-sm tracking-wide text-gold-300">{t}</span>
+              ))}
+            </div>
+            <motion.p animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity }} className="mt-8 text-xs uppercase tracking-[0.3em] text-gold-300/80">Scroll ↓</motion.p>
+          </motion.div>
+
+          {items.map((m, i) => (
+            <ChapterCard key={m.title} p={p} index={i} total={n} storyStart={STORY_START} item={m} />
+          ))}
         </div>
 
         {/* Milestone dots (tap to jump) */}
@@ -128,5 +132,34 @@ export default function Journey() {
         ))}
       </div>
     </section>
+  )
+}
+
+// One chapter card. Each instance owns its own scroll-driven opacity/y,
+// computed from the single shared progress value `p` — no state, no
+// enter/exit timers, so it can never desync from a fast scroll gesture.
+function ChapterCard({ p, index, total, storyStart, item }) {
+  const segStart = storyStart + (index / total) * (1 - storyStart)
+  const segEnd = storyStart + ((index + 1) / total) * (1 - storyStart)
+  const fade = (segEnd - segStart) * 0.35
+
+  const opacity = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [0, 1, 1, 0])
+  const y = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [24, 0, 0, -24])
+
+  return (
+    <motion.article
+      style={{ opacity, y }}
+      className="col-start-1 row-start-1 w-full max-w-2xl overflow-hidden rounded-2xl border border-gold-400/50 bg-cream-50/95 shadow-[0_20px_60px_-10px_rgba(0,0,0,.6)] md:grid md:grid-cols-[1fr_1.1fr]"
+    >
+      <div className="h-28 md:h-full md:min-h-[15rem] overflow-hidden">
+        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+      </div>
+      <div className="p-4 md:p-7 text-center md:text-left">
+        <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-saffron-600">{item.date} · {index + 1}/{total}</p>
+        <h3 className="mt-1 font-serif text-2xl md:text-4xl text-maroon-800">{item.title}</h3>
+        <p className="mt-1 text-sm md:text-base text-maroon-800/80">{item.short}</p>
+        <p className="mt-2 md:mt-3 border-gold-400 font-serif italic text-base md:text-lg text-maroon-700 md:border-l-2 md:pl-3">{item.story}</p>
+      </div>
+    </motion.article>
   )
 }
