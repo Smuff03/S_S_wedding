@@ -3,12 +3,17 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import data from '../data/weddingData'
 import Diya from './Diya'
 import { ease } from './Reveal'
+import { useLanguage, pick } from '../context/LanguageContext'
 
-const fmt = (d) => new Intl.DateTimeFormat('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }).format(new Date(d))
-const fmtTime = (d) => new Intl.DateTimeFormat('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(d))
+const fmtEn = (d) => new Intl.DateTimeFormat('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }).format(new Date(d))
+const fmtTimeEn = (d) => new Intl.DateTimeFormat('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(d))
+// mr-IN gives Marathi month/weekday names from the same Date object
+const fmtMr = (d) => new Intl.DateTimeFormat('mr-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }).format(new Date(d))
+const fmtTimeMr = (d) => new Intl.DateTimeFormat('mr-IN', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(d))
 
 export default function Hero() {
   const ref = useRef(null)
+  const { lang } = useLanguage()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
   const scale = useTransform(scrollYProgress, [0, 1], [1.05, 1.22])
@@ -17,6 +22,12 @@ export default function Hero() {
   const { hero, couple } = data
 
   const item = (i) => ({ initial: { opacity: 0, y: 30 }, animate: { opacity: 1, y: 0 }, transition: { delay: 2.3 + i * 0.25, duration: 1, ease } })
+
+  const tagline = pick(lang, hero.tagline, data.mr?.hero?.tagline)
+  const fmt = lang === 'mr' ? fmtMr : fmtEn
+  const fmtTime = lang === 'mr' ? fmtTimeMr : fmtTimeEn
+  const theWeddingOf = pick(lang, 'The Wedding Of', 'विवाह सोहळा')
+  const enterInvitation = pick(lang, 'Enter Invitation', 'निमंत्रण पहा')
 
   return (
     <section id="top" ref={ref} className="relative min-h-[100svh] overflow-hidden grid place-items-center text-center text-cream-50">
@@ -41,20 +52,20 @@ export default function Hero() {
 
       <motion.div style={{ y: textY, opacity: fade }} className="relative z-10 px-6 py-24 max-w-3xl">
         <motion.p {...item(0)} className="font-deva text-2xl md:text-4xl gold-text drop-shadow">{hero.shloka}</motion.p>
-        <motion.p {...item(1)} className="mt-8 text-xs md:text-sm uppercase tracking-[0.4em] text-gold-300">The Wedding Of</motion.p>
+        <motion.p {...item(1)} className="mt-8 text-xs md:text-sm uppercase tracking-[0.4em] text-gold-300">{theWeddingOf}</motion.p>
         <motion.h1 {...item(2)} className="mt-3 font-serif text-6xl sm:text-7xl md:text-9xl leading-[0.95] text-cream-50 drop-shadow-lg">
           {couple.groom.first}
           <span className="block text-3xl md:text-5xl gold-text italic my-1 md:my-2">&amp;</span>
           {couple.bride.first}
         </motion.h1>
-        <motion.p {...item(3)} className="mt-6 font-serif italic text-2xl md:text-4xl text-gold-300">{hero.tagline}</motion.p>
+        <motion.p {...item(3)} className="mt-6 font-serif italic text-2xl md:text-4xl text-gold-300">{tagline}</motion.p>
         <motion.div {...item(4)} className="mt-6 text-sm md:text-lg tracking-wide text-cream-100">
           <p>{fmt(hero.date)} · {fmtTime(hero.date)}</p>
           <p className="opacity-80">{hero.place}</p>
         </motion.div>
         <motion.div {...item(5)} className="mt-9">
           <motion.a href="#welcome" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn btn-gold px-9 py-4 text-base">
-            Enter Invitation <motion.span animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>↓</motion.span>
+            {enterInvitation} <motion.span animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>↓</motion.span>
           </motion.a>
         </motion.div>
       </motion.div>

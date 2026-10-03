@@ -2,10 +2,12 @@ import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import data from '../data/weddingData'
 import { Section } from './Reveal'
+import { useLanguage, pick } from '../context/LanguageContext'
 
 const hMap = { tall: 'aspect-[4/5]', mid: 'aspect-[10/9.5]', short: 'aspect-[10/7]' }
 
 export default function Gallery() {
+  const { lang } = useLanguage()
   const [idx, setIdx] = useState(null)
   const imgs = data.gallery
   const go = useCallback((d) => setIdx((i) => (i + d + imgs.length) % imgs.length), [imgs.length])
@@ -17,8 +19,12 @@ export default function Gallery() {
     return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', k) }
   }, [idx, go])
 
+  const eyebrow = pick(lang, 'Moments', 'आठवणी')
+  const title = pick(lang, 'Our Gallery', 'आमचे छायाचित्र')
+  const swipeHint = pick(lang, 'swipe to browse', 'पाहण्यासाठी सरकवा')
+
   return (
-    <Section id="gallery" eyebrow="Moments" title="Our Gallery" className="bg-cream-100">
+    <Section id="gallery" eyebrow={eyebrow} title={title} className="bg-cream-100">
       <div className="columns-2 md:columns-3 gap-3 md:gap-4">
         {imgs.map((im, i) => (
           <motion.button key={im.src} layoutId={`g-${i}`} onClick={() => setIdx(i)} aria-label={`Open ${im.alt}`}
@@ -45,7 +51,7 @@ export default function Gallery() {
                 onClick={(e) => e.stopPropagation()}
               />
             </AnimatePresence>
-            <p className="absolute bottom-5 text-sm text-white/70">{idx + 1} / {imgs.length} · swipe to browse</p>
+            <p className="absolute bottom-5 text-sm text-white/70">{idx + 1} / {imgs.length} · {swipeHint}</p>
           </motion.div>
         )}
       </AnimatePresence>

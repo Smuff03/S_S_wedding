@@ -2,22 +2,23 @@ import { useRef, useState } from 'react'
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import data from '../data/weddingData'
 import { Groom, Bride } from './Figures'
+import { useLanguage, pick } from '../context/LanguageContext'
 
 // ── How the scroll works ────────────────────────────────────────────────
 // This whole section is one tall <section> with a "sticky" viewport pinned
 // inside it. `p` (scrollYProgress) is a single number that goes from 0 to 1
 // as you scroll from the top of the section to the bottom.
 // EVERYTHING — curtains opening, the couple walking in, the thread filling,
-// and now each chapter fading in/out — is a plain function of `p`.
-// Nothing is triggered by React state + a timed animation anymore, so
-// there is nothing that can "fall behind" your finger on a fast mobile
-// scroll. Whatever `p` is right now, that's exactly what's on screen.
+// and each chapter fading in/out — is a plain function of `p`. Nothing is
+// triggered by React state + a timed animation, so nothing can "fall
+// behind" your finger on a fast mobile scroll.
 const CURTAIN_END = 0.2
 const STORY_START = 0.26
 
 export default function Journey() {
   const ref = useRef(null)
   const rm = useReducedMotion()
+  const { lang } = useLanguage()
   const [active, setActive] = useState(-1) // only used to style the dots
   const items = data.journey
   const n = items.length
@@ -51,8 +52,8 @@ export default function Journey() {
   }
 
   const { groom, bride } = data.couple
-  const intro = data.journeyIntro ?? 'Two souls, one destiny. From a chance hello to a lifetime of promises, our story has been written with laughter, chai and the blessings of Bappa. Scroll to walk through our memories.'
-  const tags = data.journeyTags ?? ['Chai Lovers', 'Sunset Chasers', 'Ganpati Devotees']
+  const intro = pick(lang, data.journeyIntro, data.mr?.journeyIntro)
+  const tags = pick(lang, data.journeyTags, data.mr?.journeyTags)
 
   // Intro fades out just before the first chapter fades in — driven by p,
   // not by a timer, so it can never lag behind a fast scroll.
@@ -67,7 +68,9 @@ export default function Journey() {
 
         {/* Heading */}
         <motion.div style={{ opacity: head }} className="absolute inset-x-0 top-5 md:top-8 z-20 text-center px-4">
-          <p className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-gold-300">Our Love Journey</p>
+          <p className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-gold-300">
+            {pick(lang, 'Our Love Journey', 'आमचा प्रेमप्रवास')}
+          </p>
           <h2 className="mt-1 font-serif text-3xl md:text-5xl text-cream-50">{groom.first} <span className="gold-text italic">&amp;</span> {bride.first}</h2>
         </motion.div>
 
@@ -85,11 +88,13 @@ export default function Journey() {
                 <span key={t} className="rounded-full border border-gold-400/60 bg-white/5 px-4 py-1.5 text-xs md:text-sm tracking-wide text-gold-300">{t}</span>
               ))}
             </div>
-            <motion.p animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity }} className="mt-8 text-xs uppercase tracking-[0.3em] text-gold-300/80">Scroll ↓</motion.p>
+            <motion.p animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity }} className="mt-8 text-xs uppercase tracking-[0.3em] text-gold-300/80">
+              {pick(lang, 'Scroll ↓', 'स्क्रोल करा ↓')}
+            </motion.p>
           </motion.div>
 
           {items.map((m, i) => (
-            <ChapterCard key={m.title} p={p} index={i} total={n} storyStart={STORY_START} item={m} />
+            <ChapterCard key={m.title} p={p} index={i} total={n} storyStart={STORY_START} item={m} mrItem={data.mr?.journey?.[i]} lang={lang} />
           ))}
         </div>
 
@@ -138,7 +143,8 @@ export default function Journey() {
 // One chapter card. Each instance owns its own scroll-driven opacity/y,
 // computed from the single shared progress value `p` — no state, no
 // enter/exit timers, so it can never desync from a fast scroll gesture.
-function ChapterCard({ p, index, total, storyStart, item }) {
+// Title stays as-is (it's a date/name), short + story switch language.
+function ChapterCard({ p, index, total, storyStart, item, mrItem, lang }) {
   const segStart = storyStart + (index / total) * (1 - storyStart)
   const segEnd = storyStart + ((index + 1) / total) * (1 - storyStart)
   const fade = (segEnd - segStart) * 0.35
@@ -146,19 +152,23 @@ function ChapterCard({ p, index, total, storyStart, item }) {
   const opacity = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [0, 1, 1, 0])
   const y = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [24, 0, 0, -24])
 
+  const title = pick(lang, item.title, mrItem?.title)
+  const short = pick(lang, item.short, mrItem?.short)
+  const story = pick(lang, item.story, mrItem?.story)
+
   return (
     <motion.article
       style={{ opacity, y }}
       className="col-start-1 row-start-1 w-full max-w-2xl overflow-hidden rounded-2xl border border-gold-400/50 bg-cream-50/95 shadow-[0_20px_60px_-10px_rgba(0,0,0,.6)] md:grid md:grid-cols-[1fr_1.1fr]"
     >
       <div className="h-28 md:h-full md:min-h-[15rem] overflow-hidden">
-        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+        <img src={item.image} alt={title} className="h-full w-full object-cover" />
       </div>
       <div className="p-4 md:p-7 text-center md:text-left">
         <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-saffron-600">{item.date} · {index + 1}/{total}</p>
-        <h3 className="mt-1 font-serif text-2xl md:text-4xl text-maroon-800">{item.title}</h3>
-        <p className="mt-1 text-sm md:text-base text-maroon-800/80">{item.short}</p>
-        <p className="mt-2 md:mt-3 border-gold-400 font-serif italic text-base md:text-lg text-maroon-700 md:border-l-2 md:pl-3">{item.story}</p>
+        <h3 className="mt-1 font-serif text-2xl md:text-4xl text-maroon-800">{title}</h3>
+        <p className="mt-1 text-sm md:text-base text-maroon-800/80">{short}</p>
+        <p className="mt-2 md:mt-3 border-gold-400 font-serif italic text-base md:text-lg text-maroon-700 md:border-l-2 md:pl-3">{story}</p>
       </div>
     </motion.article>
   )

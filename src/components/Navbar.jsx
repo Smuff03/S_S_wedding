@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
 import data from '../data/weddingData'
+import { useLanguage, pick } from '../context/LanguageContext'
 
 const links = [
-  ['welcome', 'Blessings'], ['journey', 'Our Journey'], ['couple', 'Bride & Groom'], ['family', 'Family'],
-  ['events', 'Events'], ['gallery', 'Gallery'], ['info', 'Guest Info'], ['rsvp', 'RSVP'], ['shagun', 'Shagun'],
+  ['welcome', 'Blessings', 'आशीर्वाद'], ['journey', 'Our Journey', 'आमचा प्रवास'], ['couple', 'Bride & Groom', 'वधू-वर'], ['family', 'Family', 'कुटुंब'],
+  ['events', 'Events', 'कार्यक्रम'], ['gallery', 'Gallery', 'छायाचित्रे'], ['info', 'Guest Info', 'पाहुण्यांसाठी माहिती'], ['rsvp', 'RSVP', 'उपस्थिती कळवा'], ['shagun', 'Shagun', 'शगुन'],
 ]
 
 export default function Navbar() {
+  const { lang } = useLanguage()
   const [open, setOpen] = useState(false)
   const [solid, setSolid] = useState(false)
   const { scrollYProgress } = useScroll()
@@ -29,7 +31,7 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 h-14">
           <a href="#top" className="font-serif text-xl gold-text">{data.couple.groom.first} &amp; {data.couple.bride.first}</a>
           <nav className="hidden lg:flex gap-6 text-sm text-cream-100/90">
-            {links.map(([id, l]) => <a key={id} href={`#${id}`} className="hover:text-gold-300 transition-colors">{l}</a>)}
+            {links.map(([id, l, lMr]) => <a key={id} href={`#${id}`} className="hover:text-gold-300 transition-colors">{pick(lang, l, lMr)}</a>)}
           </nav>
           <button aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)} className="lg:hidden h-10 w-10 grid place-items-center text-gold-300 text-2xl">{open ? '✕' : '☰'}</button>
         </div>
@@ -45,10 +47,10 @@ export default function Navbar() {
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-maroon-900/97 flex flex-col items-center justify-center gap-5 lg:hidden" style={{ backgroundColor: 'rgba(50,12,12,.97)' }}>
             <button aria-label="Close" onClick={() => setOpen(false)} className="absolute top-4 right-4 h-11 w-11 text-gold-300 text-2xl">✕</button>
-            {links.map(([id, l], i) => (
+            {links.map(([id, l, lMr], i) => (
               <motion.a key={id} href={`#${id}`} onClick={() => setOpen(false)}
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 * i }}
-                className="font-serif text-3xl text-cream-100 active:text-gold-300">{l}</motion.a>
+                className="font-serif text-3xl text-cream-100 active:text-gold-300">{pick(lang, l, lMr)}</motion.a>
             ))}
           </motion.div>
         )}

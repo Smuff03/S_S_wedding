@@ -2,6 +2,11 @@
    ✏️  EDIT ONLY THIS FILE to customise the whole website.
    Everything marked "DUMMY" must be replaced with your real details.
    Dates are ISO strings with the +05:30 (IST) offset.
+
+   MARATHI: translated text lives in the `mr` block at the bottom, mirroring
+   the same shape as the English content above it. When the floating
+   translate button is set to Marathi, components look here first and fall
+   back to the English text if a field is missing.
    ========================================================================== */
 const wedding = {
   couple: {
@@ -15,8 +20,8 @@ const wedding = {
     image: '/images/animated_image.png',
     shloka: '॥ श्री गणेशाय नमः ॥',
     tagline: 'Our Forever Begins',
-    date: '2027-01-02T17:45:00+05:30', // DUMMY main wedding date & time (drives countdown)
-    place: 'Rasal, Sudhagad, Maharashtra',        // DUMMY
+    date: '2027-01-02T11:30:00+05:30', // DUMMY main wedding date & time (drives countdown)
+    place: 'Pune, Maharashtra',        // DUMMY
   },
 
   welcome: {
@@ -25,6 +30,9 @@ const wedding = {
       'With the divine blessings of Shree Ganesh and our beloved elders, we joyfully invite you to celebrate the beginning of our new journey together. Your presence and blessings will make our wedding truly complete.', // DUMMY text
     shlokaLines: ['वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।', 'निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥'],
   },
+
+  journeyIntro: 'Two souls, one destiny. From a chance hello to a lifetime of promises, our story has been written with laughter, chai and the blessings of Bappa. Scroll to walk through our memories.',
+  journeyTags: ['Chai Lovers', 'Sunset Chasers', 'Ganpati Devotees'],
 
   // DUMMY milestones — edit, add or remove freely. Images live in /public/images
   journey: [
@@ -104,6 +112,53 @@ const wedding = {
   thanks: {
     message: 'Thank you for being part of our story. We can’t wait to celebrate with you.',
     families: 'Telange & Khade Families',
+  },
+
+  // ── Marathi translations ────────────────────────────────────────────
+  // Same shape as above. Add/edit freely; anything left out here just
+  // falls back to the English text above, so you don't have to translate
+  // everything on day one (dates, names and links usually stay as-is).
+  mr: {
+    hero: {
+      tagline: 'आमच्या सहजीवनाची सुरुवात',
+    },
+    welcome: {
+      title: 'वक्रतुंड महाकाय',
+      blessing:
+        'श्री गणेशाचा आणि आमच्या वडीलधाऱ्यांच्या आशीर्वादाने, आम्ही आनंदाने आपणास आमच्या नव्या सहजीवनाच्या प्रारंभाचे साक्षीदार होण्यासाठी आमंत्रित करत आहोत. आपली उपस्थिती आणि आशीर्वाद आमच्या विवाहसोहळ्याला खऱ्या अर्थाने पूर्ण करतील.',
+    },
+    journeyIntro: 'दोन जीव, एक नियती. एका योगायोगाने झालेल्या भेटीपासून ते आयुष्यभराच्या वचनापर्यंत, आमची कहाणी हसू, चहा आणि बाप्पाच्या आशीर्वादाने लिहिली गेली आहे. आमच्या आठवणींतून फिरण्यासाठी स्क्रोल करा.',
+    journeyTags: ['चहाप्रेमी', 'सूर्यास्त शोधणारे', 'गणपती भक्त'],
+    journey: [
+      { title: 'पहिली भेट', short: 'पुण्यातील एका मित्राच्या कार्यक्रमात योगायोगाने झालेली भेट.', story: 'एका साध्या चहावरून तासन्तास गप्पा रंगतील असं आम्हाला दोघांनाही वाटलं नव्हतं. आधी कोण बोललं यावरून आजही आमचा वाद होतो.' },
+      { title: 'मित्रांपासून जिवलग मित्रांपर्यंत', short: 'रात्री उशिरापर्यंतचे फोन कॉल्स आणि न संपणाऱ्या फेऱ्या.', story: 'प्लेलिस्ट शेअर करण्यापासून ते स्वप्नं शेअर करण्यापर्यंत, आम्हाला एकमेकांच्या सोबतीत हक्काचं घर सापडलं.' },
+      { title: 'मोठा प्रश्न', short: 'सोनेरी सूर्यास्ताच्या साक्षीने सागरने विचारलं.', story: 'एक शांत टेकडी, एक बावरलेलं हसू आणि पूर्णपणे विसरलेलं एक तालीम केलेलं भाषण. तिने होकार दिला.' },
+      { title: 'कुटुंबांची भेट', short: 'दोन कुटुंबं, एक मोठा उत्सव.', story: 'पुरणपोळी, हसणं-खिदळणं आणि आशीर्वाद — पहिल्याच जेवणापासून आमची दोन्ही कुटुंबं एक वाटू लागली.' },
+      { title: 'रोका व साखरपुडा', short: 'आमच्या प्रियजनांसमोर आम्ही अधिकृतपणे एकत्र आलो.', story: 'अंगठ्या, आशीर्वाद आणि आनंदाश्रू. कायमच्या साथीची उलटगणती सुरू झाली.' },
+    ],
+    profiles: {
+      groom: { role: 'नवरदेव', bio: 'शांत, जिज्ञासू आणि हळूवारपणे विनोदी. दिवसा सॉफ्टवेअर इंजिनिअर, कायम ट्रेकिंग आणि क्रिकेटचा वेडा.', traits: ['ट्रेकिंग', 'क्रिकेट', 'फिल्टर कॉफी'] },
+      bride: { role: 'नवरी', bio: 'प्रेमळ, कल्पक आणि उत्साहाने भरलेली. शास्त्रीय संगीत आणि लांब प्रवासांची आवड असलेली डिझायनर.', traits: ['रांगोळी', 'संगीत', 'प्रवास'] },
+    },
+    events: {
+      engagement: { name: 'साखरपुडा', note: 'अंगठी समारंभानंतर स्नेहभोजन.' },
+      mehendi: { name: 'मेहंदी', note: 'मेहंदी कलाकार, संगीत आणि खेळ.' },
+      haldi: { name: 'हळद', note: 'पिवळे कपडे घाला आणि हळदीचा आनंद लुटा!' },
+      wedding: { name: 'विवाह सोहळा', note: 'पारंपरिक महाराष्ट्रीयन विवाह विधी. मुहूर्त सकाळी ११:३०.' },
+      reception: { name: 'स्वागत समारंभ', note: 'स्नेहभोजन, नृत्य आणि उत्सव.' },
+    },
+    info: [
+      { title: 'पोशाख संहिता', items: ['विवाह सोहळा: पारंपरिक — साडी, कुर्ता-पायजमा, धोतर', 'हळद: पिवळे / फिकट रंग', 'स्वागत समारंभ: इंडो-वेस्टर्न किंवा उत्सवी औपचारिक', 'रंगसंगती: केशरी, मरून, सोनेरी, आयव्हरी'] },
+      { title: 'भोजन', items: ['विवाहसोहळ्यात शुद्ध शाकाहारी महाराष्ट्रीयन ताट', 'पुरणपोळी, मसालेभात, आमटी व मोदक', 'स्वागत समारंभात लाइव्ह चाट काउंटर', 'कृपया आरएसव्हीपीमध्ये कोणत्याही ॲलर्जीची माहिती द्या'] },
+      { title: 'प्रवास', items: ['जवळचा विमानतळ: पुणे आंतरराष्ट्रीय (PNQ), १२ किमी', 'रेल्वे स्थानक: पुणे जंक्शन, ४ किमी', 'सर्व ठिकाणी मोफत पार्किंग उपलब्ध', 'हॉटेलवरून शटल — सकाळी ९:३०'] },
+      { title: 'निवास व्यवस्था', items: ['हॉटेल सनराइज — विशेष पाहुणे दर, कोड TELANGE-KHADE', 'द ग्रँड रीजन्सी — कार्यक्रमस्थळापासून २ किमी', 'खोली आरक्षणासाठी श्री. अमित (+९१ ९०००० ०००१) यांच्याशी संपर्क साधा'] },
+    ],
+    shagun: {
+      note: 'तुमची उपस्थिती हीच आमच्यासाठी सर्वात मोठी भेट आहे. आशीर्वाद द्यायचे असल्यास खालील तपशील वापरू शकता.',
+    },
+    thanks: {
+      message: 'आमच्या कहाणीचा भाग बनल्याबद्दल धन्यवाद. तुमच्यासोबत साजरा करण्यासाठी आम्ही उत्सुक आहोत.',
+    },
   },
 }
 export default wedding
