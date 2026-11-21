@@ -54,9 +54,9 @@ export default function Hero() {
         <motion.p {...item(0)} className="font-deva text-2xl md:text-4xl gold-text drop-shadow">{hero.shloka}</motion.p>
         <motion.p {...item(1)} className="mt-8 text-xs md:text-sm uppercase tracking-[0.4em] text-gold-300">{theWeddingOf}</motion.p>
         <motion.h1 {...item(2)} className="mt-3 font-serif text-6xl sm:text-7xl md:text-9xl leading-[0.95] text-cream-50 drop-shadow-lg">
-          {couple.groom.first}
-          <span className="block text-3xl md:text-5xl gold-text italic my-1 md:my-2">&amp;</span>
           {couple.bride.first}
+          <span className="block text-3xl md:text-5xl gold-text italic my-1 md:my-2">&amp;</span>
+          {couple.groom.first}
         </motion.h1>
         <motion.p {...item(3)} className="mt-6 font-serif italic text-2xl md:text-4xl text-gold-300">{tagline}</motion.p>
         <motion.div {...item(4)} className="mt-6 text-sm md:text-lg tracking-wide text-cream-100">

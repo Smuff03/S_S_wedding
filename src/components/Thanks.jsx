@@ -15,7 +15,7 @@ export default function Thanks() {
       <motion.div className="absolute left-1/2 top-1/3 h-96 w-96 -translate-x-1/2 rounded-full bg-saffron-500/20 blur-3xl" animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }} transition={{ duration: 6, repeat: Infinity }} />
       <div className="relative">
         <Reveal><p className="font-deva text-2xl gold-text">॥ श्री गणेशाय नमः ॥</p></Reveal>
-        <Reveal delay={0.15}><h2 className="mt-8 font-serif text-5xl md:text-8xl">{couple.groom.first} <span className="gold-text italic">&amp;</span> {couple.bride.first}</h2></Reveal>
+        <Reveal delay={0.15}><h2 className="mt-8 font-serif text-5xl md:text-8xl">{couple.bride.first} <span className="gold-text italic">&amp;</span> {couple.groom.first}</h2></Reveal>
         <Reveal delay={0.25}><p className="mx-auto mt-6 max-w-xl text-lg text-cream-100/85">{message}</p></Reveal>
         <Reveal delay={0.35}>
           <motion.p whileHover={{ scale: 1.05 }} className="mt-8 inline-block rounded-full border border-gold-400/60 px-8 py-3 font-serif text-2xl md:text-3xl gold-text">{couple.hashtag}</motion.p>

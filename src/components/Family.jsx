@@ -19,7 +19,7 @@ const Group = ({ g, lang }) => (
 
 export default function Family() {
   const { lang } = useLanguage()
-  const sides = [data.family.groom, data.family.bride]
+  const sides = [data.family.bride, data.family.groom]
   const eyebrow = pick(lang, 'With Blessings Of', 'यांच्या आशीर्वादाने')
   const title = pick(lang, 'Our Families', 'आमची कुटुंबे')
 

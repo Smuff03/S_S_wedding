@@ -10,8 +10,8 @@
    ========================================================================== */
 const wedding = {
   couple: {
-    groom: { first: 'Sagar', full: 'Sagar Telange', marathi: 'सागर' },
     bride: { first: 'Shrutika', full: 'Shrutika Khade', marathi: 'श्रुतिका' },
+    groom: { first: 'Sagar', full: 'Sagar Telang  e', marathi: 'सागर' },
     hashtag: '#SagarWedsShrutika', // DUMMY hashtag
   },
 
@@ -50,27 +50,28 @@ const wedding = {
 
   // DUMMY family — all names fictional
   family: {
-    groom: {
-      title: 'Family of the Groom',
-      parents: { label: 'Parents', people: ['Shri Rajendra Telange', 'Smt. Sunita Telange'] },
-      paternal: { label: 'Paternal Grandparents', people: ['Late Shri Dattatray Telange', 'Smt. Kamlabai Telange'] },
-      maternal: { label: 'Maternal Grandparents', people: ['Shri Vitthal Jadhav', 'Smt. Sarasvati Jadhav'] },
-    },
+
     bride: {
       title: 'Family of the Bride',
-      parents: { label: 'Parents', people: ['Shri Prakash Khade', 'Smt. Manisha Khade'] },
-      paternal: { label: 'Paternal Grandparents', people: ['Shri Bhaurao Khade', 'Smt. Indubai Khade'] },
-      maternal: { label: 'Maternal Grandparents', people: ['Shri Ramchandra Pawar', 'Smt. Lataben Pawar'] },
+      parents: { label: 'Parents', people: ['Mr. Ganesh Khade', 'Mrs. Pooja Khade'] },
+      paternal: { label: 'Paternal Grandparents', people: ['Mr Suresh Khade', 'Mrs. Surekha Khade'] },
+      maternal: { label: 'Maternal Grandparents', people: ['Late Vijayanand Mayekar', 'Late Satlaj Mayekar'] },
+    },
+    groom: {
+      title: 'Family of the Groom',
+      parents: { label: 'Parents', people: ['Late Sakharam Telange', 'Smt. Sangeeta Telange'] },
+      paternal: { label: 'Paternal Grandparents', people: ['Late Mahadu Telange', 'Late Kamlabai Telange'] },
+      maternal: { label: 'Maternal Grandparents', people: ['Shri Vitthal Jadhav', 'Smt. Sarasvati Jadhav'] },
     },
   },
 
   // DUMMY venues, dates & times. mapQuery is used for Google Maps buttons.
   events: [
-    { id: 'engagement', icon: '💍', name: 'Engagement', start: '2027-01-01T18:00:00+05:30', end: '2027-01-11T21:00:00+05:30', venue: 'Hotel Sunrise Banquet', address: 'FC Road, Pune 411004', mapQuery: 'River Trail Adventure Camp', note: 'Ring ceremony followed by dinner.' },
-    { id: 'mehendi', icon: '🪷', name: 'Mehendi', start: '2027-01-01T16:00:00+05:30', end: '2027-01-12T20:00:00+05:30', venue: 'Khade Farmhouse', address: 'Hinjewadi, Pune 411057', mapQuery: 'River Trail Adventure Camp', note: 'Henna artists, music and games.' },
-    { id: 'haldi', icon: '🌼', name: 'Haldi', start: '2027-01-02T10:00:00+05:30', end: '2027-01-12T13:00:00+05:30', venue: 'Telange Residence Lawn', address: 'Kothrud, Pune 411038', mapQuery: 'River Trail Adventure Camp', note: 'Wear yellow & play with turmeric!' },
-    { id: 'wedding', icon: '🕉️', name: 'Wedding Ceremony', start: '2027-01-02T11:30:00+05:30', end: '2027-01-14T14:30:00+05:30', venue: 'Shree Ganesh Mangal Karyalay', address: 'Sadashiv Peth, Pune 411030', mapQuery: 'River Trail Adventure Camp', note: 'Traditional Maharashtrian Vivah Vidhi. Muhurat 11:30 AM.' },
-    { id: 'reception', icon: '🎉', name: 'Reception', start: '2027-01-02T19:00:00+05:30', end: '2027-01-14T23:00:00+05:30', venue: 'The Grand Regency', address: 'Koregaon Park, Pune 411001', mapQuery: 'River Trail Adventure Camp', note: 'Dinner, dance and celebrations.' },
+    { id: 'engagement', icon: '💍', name: 'Engagement', start: '2027-01-01T16:30:00+05:30', end: '2027-01-11T18:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Ring ceremony followed by dinner.' },
+    { id: 'Sangeet', icon: '🪷', name: 'Sangeet', start: '2027-01-01T20:00:00+05:30', end: '2027-01-12T22:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Henna artists, music and games.' },
+    { id: 'haldi', icon: '🌼', name: 'Haldi', start: '2027-01-02T10:00:00+05:30', end: '2027-01-12T13:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Wear yellow & play with turmeric!' },
+    { id: 'wedding', icon: '🕉️', name: 'Wedding Ceremony', start: '2027-01-02T17:00:00+05:30', end: '2027-01-02T19:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Traditional Maharashtrian Vivah Vidhi. Muhurat 05:55 PM.' },
+    { id: 'reception', icon: '🎉', name: 'Reception', start: '2027-01-02T20:00:00+05:30', end: '2027-01-02T23:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Dinner, dance and celebrations.' },
   ],
 
   // DUMMY gallery — replace with real photos in /public/images (any ratio). h = visual height hint
@@ -83,10 +84,8 @@ const wedding = {
 
   // DUMMY guest information
   info: [
-    { icon: '👗', title: 'Dress Code', items: ['Ceremony: Traditional — sarees, kurta-pyjama, dhoti', 'Haldi: Yellow / pastel tones', 'Reception: Indo-western or festive formal', 'Colour palette: Saffron, maroon, gold, ivory'] },
-    { icon: '🍛', title: 'Food', items: ['Pure vegetarian Maharashtrian thali at the wedding', 'Puran poli, masale bhaat, amti & modak', 'Live chaat counters at the reception', 'Please inform us of any allergies in RSVP'] },
-    { icon: '🚗', title: 'Travel', items: ['Nearest airport: Pune International (PNQ), 12 km', 'Railway: Pune Junction, 4 km', 'Free parking available at all venues', 'Shuttle from hotels — 9:30 AM on 14 Feb'] },
-    { icon: '🏨', title: 'Accommodation', items: ['Hotel Sunrise — special guest rate, code TELANGE-KHADE', 'The Grand Regency — 2 km from the venue', 'Contact Mr. Amit (+91 90000 00001) for room bookings'] },
+    { icon: '👗', title: 'Dress Code', items: ['Engagement: Traditional South', 'Haldi: Yellow / pastel tones', 'Wedding: Maharashtrian Traditional', 'Reception: Indo-western or festive formal'] },
+    { icon: '🚗', title: 'Travel', items: ['Nearest Venue: Ballaleshwar Ganpati temple', 'Free parking available at  venues'] },
   ],
 
   // DUMMY contact / RSVP. Set endpoint to a Google Apps Script / Formspree URL to collect responses.
