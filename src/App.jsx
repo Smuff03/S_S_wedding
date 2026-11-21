@@ -15,7 +15,7 @@ import Info from './components/Info'
 import RSVP from './components/RSVP'
 import Shagun from './components/Shagun'
 import Thanks from './components/Thanks'
-import FloatingTranslateButton from './components/FloatingTranslateButton'
+
 
 export default function App() {
   return (
@@ -41,7 +41,7 @@ export default function App() {
           <Shagun />
           <Thanks />
         </main>
-        <FloatingTranslateButton />
+        
       </LanguageProvider>
     </MotionConfig>
   )
