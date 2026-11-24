@@ -11,8 +11,8 @@
 const wedding = {
   couple: {
     bride: { first: 'Shrutika', full: 'Shrutika Khade', marathi: 'श्रुतिका' },
-    groom: { first: 'Sagar', full: 'Sagar Telang  e', marathi: 'सागर' },
-    hashtag: '#SagarWedsShrutika', // DUMMY hashtag
+    groom: { first: 'Sagar', full: 'Sagar Telange', marathi: 'सागर' },
+    hashtag: '#ShrutikaWedsSagar', // DUMMY hashtag
   },
 
   // Put your Ballaleshwar Ganpati Temple, Pali photo at public/images/hero-temple.jpg
@@ -67,16 +67,16 @@ const wedding = {
 
   // DUMMY venues, dates & times. mapQuery is used for Google Maps buttons.
   events: [
-    { id: 'engagement', icon: '💍', name: 'Engagement', start: '2027-01-01T16:30:00+05:30', end: '2027-01-11T18:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Ring ceremony followed by dinner.' },
-    { id: 'Sangeet', icon: '🪷', name: 'Sangeet', start: '2027-01-01T20:00:00+05:30', end: '2027-01-12T22:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Henna artists, music and games.' },
-    { id: 'haldi', icon: '🌼', name: 'Haldi', start: '2027-01-02T10:00:00+05:30', end: '2027-01-12T13:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Wear yellow & play with turmeric!' },
-    { id: 'wedding', icon: '🕉️', name: 'Wedding Ceremony', start: '2027-01-02T17:00:00+05:30', end: '2027-01-02T19:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Traditional Maharashtrian Vivah Vidhi. Muhurat 05:55 PM.' },
-    { id: 'reception', icon: '🎉', name: 'Reception', start: '2027-01-02T20:00:00+05:30', end: '2027-01-02T23:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Dinner, dance and celebrations.' },
+    { id: 'engagement', icon: '💍', name: 'Engagement', img: '/images/g1.svg', start: '2027-01-01T16:30:00+05:30', end: '2027-01-11T18:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Ring ceremony followed by dinner.', maps: 'https://www.google.com/maps/search/?api=1&query=River+Trail+Adventure+Camp' },
+    { id: 'Sangeet', icon: '🪷', name: 'Sangeet', img: '/images/g2.svg', start: '2027-01-01T20:00:00+05:30', end: '2027-01-12T22:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Henna artists, music and games.', maps: 'https://www.google.com/maps/search/?api=1&query=River+Trail+Adventure+Camp' },
+    { id: 'haldi', icon: '🌼', name: 'Haldi', img: '/images/image-6.jpeg', start: '2027-01-02T10:00:00+05:30', end: '2027-01-12T13:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Wear yellow & play with turmeric!', maps: 'https://www.google.com/maps/search/?api=1&query=River+Trail+Adventure+Camp' },
+    { id: 'wedding', icon: '🕉️', name: 'Wedding Ceremony', img: '/images/image-7.png', start: '2027-01-02T17:00:00+05:30', end: '2027-01-02T19:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Traditional Maharashtrian Vivah Vidhi. Muhurat 05:55 PM.', maps: 'https://www.google.com/maps/search/?api=1&query=River+Trail+Adventure+Camp' },
+    { id: 'reception', icon: '🎉', name: 'Reception', img: '/images/image-8.png', start: '2027-01-02T20:00:00+05:30', end: '2027-01-02T23:00:00+05:30', venue: 'River Trail Adventure Camp', address: 'At - Ambole, Post - Pali Taluka, Pali, Maharashtra 410205', mapQuery: 'River Trail Adventure Camp', note: 'Dinner, dance and celebrations.', maps: 'https://www.google.com/maps/search/?api=1&query=River+Trail+Adventure+Camp' },
   ],
 
   // DUMMY gallery — replace with real photos in /public/images (any ratio). h = visual height hint
   gallery: [
-    { src: '/images/g1.svg', alt: 'Moment 1', h: 'tall' }, { src: '/images/g2.svg', alt: 'Moment 2', h: 'short' },
+    { src: '/images/IMG_1174.JPG', alt: 'Moment 1', h: 'tall' }, { src: '/images/g2.JPG', alt: 'Moment 2', h: 'short' },
     { src: '/images/g3.svg', alt: 'Moment 3', h: 'mid' }, { src: '/images/g4.svg', alt: 'Moment 4', h: 'tall' },
     { src: '/images/g5.svg', alt: 'Moment 5', h: 'short' }, { src: '/images/g6.svg', alt: 'Moment 6', h: 'mid' },
     { src: '/images/g7.svg', alt: 'Moment 7', h: 'tall' }, { src: '/images/g8.svg', alt: 'Moment 8', h: 'short' },
@@ -110,7 +110,7 @@ const wedding = {
 
   thanks: {
     message: 'Thank you for being part of our story. We can’t wait to celebrate with you.',
-    families: 'Telange & Khade Families',
+    families: 'Khade & Telange Families',
   },
 
   // ── Marathi translations ────────────────────────────────────────────
@@ -160,4 +160,5 @@ const wedding = {
     },
   },
 }
-export default wedding
+export const WEDDING = wedding;
+export default wedding;

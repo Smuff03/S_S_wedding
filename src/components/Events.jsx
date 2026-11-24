@@ -1,59 +1,121 @@
-import { motion } from 'framer-motion'
-import data from '../data/weddingData'
-import { Section } from './Reveal'
-import { useLanguage, pick } from '../context/LanguageContext'
+import { motion } from "framer-motion";
+import { Calendar, Clock, MapPin, Shirt, ArrowUpRight } from "lucide-react";
+import { useLang } from "@/context/LanguageContext";
+import { WEDDING } from "@/wedding/data";
+import { MaskedLines, FadeUp, Eyebrow } from "./Motion";
+import { Lotus } from "./Monogram";
 
-const dEn = (s) => new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }).format(new Date(s))
-const tEn = (s) => new Intl.DateTimeFormat('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(s))
-const dMr = (s) => new Intl.DateTimeFormat('mr-IN', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }).format(new Date(s))
-const tMr = (s) => new Intl.DateTimeFormat('mr-IN', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' }).format(new Date(s))
-const utc = (s) => new Date(s).toISOString().replace(/[-:]|\.\d{3}/g, '')
+const MetaRow = ({ icon: Icon, label, value }) => (
+  <div className="flex items-start gap-4">
+    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/40 text-goldlight">
+      <Icon size={13} strokeWidth={1.7} />
+    </span>
+    <div>
+      <p className="text-[9px] uppercase tracking-[0.28em] text-ivory/45">{label}</p>
+      <p className="mt-1 text-sm leading-relaxed text-ivory/85 md:text-[15px]">{value}</p>
+    </div>
+  </div>
+);
 
-const gcal = (e) => `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`${e.name} — Sagar & Shrutika`)}&dates=${utc(e.start)}/${utc(e.end)}&details=${encodeURIComponent(e.note)}&location=${encodeURIComponent(`${e.venue}, ${e.address}`)}`
-const maps = (e) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapQuery)}`
-
-function downloadIcs(e) {
-  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Wedding//EN', 'BEGIN:VEVENT', `UID:${e.id}@wedding`, `DTSTAMP:${utc(new Date())}`, `DTSTART:${utc(e.start)}`, `DTEND:${utc(e.end)}`, `SUMMARY:${e.name} — Sagar & Shrutika`, `LOCATION:${e.venue}, ${e.address}`, `DESCRIPTION:${e.note}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n')
-  const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }))
-  const a = Object.assign(document.createElement('a'), { href: url, download: `${e.id}.ics` })
-  a.click(); URL.revokeObjectURL(url)
-}
-
-export default function Events() {
-  const { lang } = useLanguage()
-  const d = lang === 'mr' ? dMr : dEn
-  const t = lang === 'mr' ? tMr : tEn
-  const eyebrow = pick(lang, 'Celebrations', 'सोहळे')
-  const title = pick(lang, 'Wedding Events', 'विवाह कार्यक्रम')
-  const mapLabel = pick(lang, '📍 Map', '📍 नकाशा')
-  const icsLabel = pick(lang, '⬇ .ics', '⬇ .ics')
+const EventRow = ({ ev, i }) => {
+  const { t, lang } = useLang();
+  const flip = i % 2 === 1;
 
   return (
-    <Section id="events" eyebrow={eyebrow} title={title} className="bg-cream-50">
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {data.events.map((e, i) => {
-          const mrE = data.mr?.events?.[e.id]
-          const name = pick(lang, e.name, mrE?.name)
-          const note = pick(lang, e.note, mrE?.note)
-          return (
-            <motion.div key={e.id} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.7, delay: (i % 3) * 0.12 }}
-              whileHover={{ y: -6 }} className={`card p-6 flex flex-col ${e.id === 'wedding' ? 'ring-2 ring-gold-400 lg:scale-[1.03]' : ''}`}>
-              <motion.div whileHover={{ rotate: [0, -10, 10, 0] }} className="text-4xl">{e.icon}</motion.div>
-              <h3 className="mt-3 font-serif text-3xl text-maroon-800">{name}</h3>
-              <p className="mt-2 text-saffron-600 font-medium">{d(e.start)}</p>
-              <p className="text-maroon-800/80">{t(e.start)} – {t(e.end)}</p>
-              <p className="mt-3 font-serif text-xl">{e.venue}</p>
-              <p className="text-sm text-maroon-800/70">{e.address}</p>
-              <p className="mt-3 text-sm italic text-maroon-700 flex-1">{note}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <motion.a whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.04 }} href={maps(e)} target="_blank" rel="noreferrer" className="btn btn-gold !py-2.5 !px-4">{mapLabel}</motion.a>
-                <motion.a whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.04 }} href={gcal(e)} target="_blank" rel="noreferrer" className="btn btn-ghost !py-2.5 !px-4">📅 Google</motion.a>
-                <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.04 }} onClick={() => downloadIcs(e)} className="btn btn-ghost !py-2.5 !px-4">{icsLabel}</motion.button>
-              </div>
-            </motion.div>
-          )
-        })}
+    <div
+      data-testid={`event-card-${ev.id}`}
+      className="grid items-center gap-12 py-16 md:py-20 lg:grid-cols-2 lg:gap-20"
+    >
+      <FadeUp className={`relative ${flip ? "lg:order-2" : ""}`}>
+        <p className="text-stroke-gold font-cinzel pointer-events-none absolute -top-12 left-0 z-10 text-7xl md:text-8xl">
+          {ev.num}
+        </p>
+        <div
+          className={`relative overflow-hidden ${i % 2 === 0 ? "arch" : ""}`}
+          style={{ boxShadow: "0 40px 90px rgba(0,0,0,0.4)" }}
+        >
+          <motion.img
+            src={ev.img}
+            alt={ev.name[lang]}
+            loading="lazy"
+            initial={{ scale: 1.12 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+            className="aspect-[4/3] w-full object-cover transition-transform duration-[1400ms] hover:scale-[1.06]"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 mix-blend-soft-light"
+            style={{ background: `linear-gradient(160deg, ${ev.accent}33, transparent 60%)` }}
+          />
+        </div>
+        <div className={`pointer-events-none absolute -inset-3 border border-gold/25 ${i % 2 === 0 ? "arch" : ""}`} />
+      </FadeUp>
+
+      <div className={flip ? "lg:order-1" : ""}>
+        <FadeUp>
+          <p className="font-cinzel text-xs tracking-[0.4em]" style={{ color: ev.accent }}>
+            {ev.num} — {t.events.eyebrow}
+          </p>
+          <h3 className="mt-4 font-serif text-4xl text-ivory md:text-5xl">
+            {ev.name[lang]}
+          </h3>
+        </FadeUp>
+        <FadeUp delay={0.15} className="mt-9 space-y-5">
+          <MetaRow icon={Calendar} label={t.events.datetime} value={ev.date[lang]} />
+          <MetaRow icon={MapPin} label={t.events.venue} value={ev.venue[lang]} />
+          <MetaRow icon={Shirt} label={t.events.dress} value={ev.dress[lang]} />
+        </FadeUp>
+        <FadeUp delay={0.25}>
+          <a
+            data-testid={`event-directions-${ev.id}`}
+            href={ev.maps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-10 inline-flex items-center gap-2 border border-gold/50 px-7 py-3.5 text-[10px] font-medium uppercase tracking-[0.28em] text-goldlight transition-all duration-300 hover:bg-gold hover:text-burgundydeep"
+          >
+            {t.events.directions}
+            <ArrowUpRight size={13} strokeWidth={1.8} />
+          </a>
+        </FadeUp>
       </div>
-    </Section>
-  )
-}
+    </div>
+  );
+};
+
+export const Events = () => {
+  const { t } = useLang();
+  return (
+    <section
+      id="events"
+      data-testid="events"
+      className="relative overflow-hidden bg-[#331621] px-6 py-24 text-ivory md:px-14 md:py-36 lg:px-20"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(198,164,106,0.1),transparent_55%)]" />
+      <Lotus className="animate-spin-slower absolute -left-32 top-1/3 h-[460px] w-[460px] opacity-[0.05]" />
+
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <Eyebrow className="justify-center">{t.events.eyebrow}</Eyebrow>
+          <MaskedLines
+            lines={[t.events.heading]}
+            className="mt-8 font-serif text-4xl text-ivory md:text-6xl"
+          />
+          <FadeUp delay={0.2}>
+            <p className="mt-6 font-serif text-lg italic text-ivory/60">
+              {t.events.sub}
+            </p>
+          </FadeUp>
+        </div>
+
+        <div className="mt-8 divide-y divide-gold/15">
+          {WEDDING.events.map((ev, i) => (
+            <EventRow key={ev.id} ev={ev} i={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Events;

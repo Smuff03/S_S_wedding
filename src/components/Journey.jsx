@@ -61,7 +61,7 @@ export default function Journey() {
   const introY = useTransform(p, [0, STORY_START - 0.03, STORY_START], [0, 0, -16])
 
   return (
-    <section id="journey" ref={ref} style={{ height: `${(n + 2) * 85}svh`, touchAction: 'pan-y' }} className="relative bg-maroon-900">
+    <section id="journey" ref={ref} style={{ height: `${(n + 2) * 85}svh`, touchAction: 'pan-y' }} className="relative bg-[#331621]">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_35%,#6B1E1E_0%,#320C0C_65%,#1d0606_100%)]">
         <motion.div style={{ opacity: glow }} className="absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-saffron-500/20 blur-3xl" />
         <div className="absolute inset-0 opacity-30 mandala-bg" />
@@ -151,6 +151,8 @@ function ChapterCard({ p, index, total, storyStart, item, mrItem, lang }) {
 
   const opacity = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [0, 1, 1, 0])
   const y = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [24, 0, 0, -24])
+  // horizontal slide to prevent overlap: slide in from right, exit left
+  const x = useTransform(p, [segStart - fade, segStart, segEnd, segEnd + fade], [150, 0, 0, -150])
 
   const title = pick(lang, item.title, mrItem?.title)
   const short = pick(lang, item.short, mrItem?.short)
@@ -158,7 +160,7 @@ function ChapterCard({ p, index, total, storyStart, item, mrItem, lang }) {
 
   return (
     <motion.article
-      style={{ opacity, y }}
+      style={{ opacity, y, x }}
       className="col-start-1 row-start-1 w-full max-w-2xl overflow-hidden rounded-2xl border border-gold-400/50 bg-cream-50/95 shadow-[0_20px_60px_-10px_rgba(0,0,0,.6)] md:grid md:grid-cols-[1fr_1.1fr]"
     >
       <div className="h-28 md:h-full md:min-h-[15rem] overflow-hidden">

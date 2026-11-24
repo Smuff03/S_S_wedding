@@ -19,7 +19,7 @@ export default function Loader() {
           <div>
             <motion.div initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1 }} className="gold-text font-deva text-6xl">ॐ</motion.div>
             <Diya className="mt-4" size={52} />
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-4 font-serif text-gold-300 tracking-[0.3em] text-sm uppercase">Sagar &amp; Shrutika</motion.p>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="mt-4 font-serif text-gold-300 tracking-[0.3em] text-sm uppercase">Shrutika &amp; Sagar</motion.p>
           </div>
         </motion.div>
       )}

@@ -24,7 +24,7 @@ export default function Gallery() {
   const swipeHint = pick(lang, 'swipe to browse', 'पाहण्यासाठी सरकवा')
 
   return (
-    <Section id="gallery" eyebrow={eyebrow} title={title} className="bg-cream-100">
+    <Section id="gallery" eyebrow={eyebrow} title={title} className="bg-cream-100 relative">
       <div className="columns-2 md:columns-3 gap-3 md:gap-4">
         {imgs.map((im, i) => (
           <motion.button key={im.src} layoutId={`g-${i}`} onClick={() => setIdx(i)} aria-label={`Open ${im.alt}`}

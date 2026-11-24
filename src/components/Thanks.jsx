@@ -23,7 +23,7 @@ export default function Thanks() {
         <Reveal delay={0.45}><div className="mt-10 flex justify-center gap-6"><Diya /><Diya size={56} /><Diya /></div></Reveal>
         <Divider light />
         <p className="mt-6 text-sm tracking-widest uppercase text-gold-300">{withLove}, {thanks.families}</p>
-        <p className="mt-10 text-xs text-cream-100/50">© {new Date().getFullYear()} {couple.groom.full} &amp; {couple.bride.full}</p>
+        <p className="mt-10 text-xs text-cream-100/50">© {new Date().getFullYear()} {couple.bride.full} &amp; {couple.groom.full}</p>
       </div>
     </section>
   )

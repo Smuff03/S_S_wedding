@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import data from '../data/weddingData'
 import { Section, ease } from './Reveal'
 import { useLanguage, pick } from '../context/LanguageContext'
+import { Lotus } from './wedding/Monogram'
 
 function Profile({ p, mrP, from, lang }) {
   const role = pick(lang, p.role, mrP?.role)
@@ -39,8 +40,8 @@ export default function Couple() {
   return (
     <Section id="couple" eyebrow={eyebrow} title={title} className="bg-cream-100 mandala-bg">
       <div className="grid gap-16 md:grid-cols-2 md:gap-10 items-start">
-        <Profile p={data.profiles.groom} mrP={data.mr?.profiles?.groom} from={-60} lang={lang} />
         <Profile p={data.profiles.bride} mrP={data.mr?.profiles?.bride} from={60} lang={lang} />
+        <Profile p={data.profiles.groom} mrP={data.mr?.profiles?.groom} from={-60} lang={lang} />
       </div>
     </Section>
   )

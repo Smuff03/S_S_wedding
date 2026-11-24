@@ -1,38 +1,50 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
+import { WEDDING } from '@/data/weddingData';
 
-const LanguageContext = createContext(null)
+// Context to hold language state and translation data
+const LanguageContext = createContext(null);
 
-// Wrap your whole app in this once (see main.jsx / App.jsx instructions below).
 export function LanguageProvider({ children }) {
-    const [lang, setLang] = useState(() => {
-        if (typeof window === 'undefined') return 'en'
-        return localStorage.getItem('site-lang') || 'en'
-    })
+  const [lang, setLang] = useState(() => {
+    if (typeof window === 'undefined') return 'en';
+    return localStorage.getItem('site-lang') || 'en';
+  });
 
-    useEffect(() => {
-        localStorage.setItem('site-lang', lang)
-        document.documentElement.lang = lang === 'mr' ? 'mr' : 'en'
-    }, [lang])
+  // Persist language choice and set html lang attribute
+  useEffect(() => {
+    localStorage.setItem('site-lang', lang);
+    document.documentElement.lang = lang === 'mr' ? 'mr' : 'en';
+  }, [lang]);
 
-    const toggleLang = () => setLang((l) => (l === 'en' ? 'mr' : 'en'))
+  const toggleLang = () => setLang((l) => (l === 'en' ? 'mr' : 'en'));
 
-    return (
-        <LanguageContext.Provider value={{ lang, toggleLang, setLang }}>
-            {children}
-        </LanguageContext.Provider>
-    )
+  // Build translation object based on selected language
+  const t = useMemo(() => {
+    if (lang === 'mr' && WEDDING.mr) {
+      // Merge base English data with Marathi overrides (deep merge for objects/arrays)
+      return { ...WEDDING, ...WEDDING.mr };
+    }
+    return WEDDING;
+  }, [lang]);
+
+  return (
+    <LanguageContext.Provider value={{ lang, toggleLang, setLang, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
-// Use inside any component: const { lang, toggleLang } = useLanguage()
-export function useLanguage() {
-    const ctx = useContext(LanguageContext)
-    if (!ctx) throw new Error('useLanguage must be used inside <LanguageProvider>')
-    return ctx
-}
+// Hook to access the context
+export const useLang = () => {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error('useLang must be used within <LanguageProvider>');
+  return ctx;
+};
 
-// Small helper: pick the Marathi value when active language is 'mr' and a
-// Marathi value exists, otherwise fall back to English. Use this everywhere
-// you show text that has an `mr` counterpart in weddingData.js.
+// Alias for backward compatibility
+export const useLanguage = useLang;
+
+// Helper to pick Marathi value when available
 export function pick(lang, en, mr) {
-    return lang === 'mr' && mr ? mr : en
+  return lang === 'mr' && mr ? mr : en;
 }
